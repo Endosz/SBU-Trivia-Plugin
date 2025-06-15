@@ -1,0 +1,11 @@
+name: SBUTrivia
+version: 1.0
+main: com.sbu.SBUTrivia
+api-version: 1.21
+commands:
+  answer:
+    description: Answer a question
+    usage: /answer
+  giveButton:
+    description: Give an answer button
+    usage: /giveButton
