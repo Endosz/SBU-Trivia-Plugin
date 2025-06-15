@@ -6,7 +6,10 @@ public class SBUTrivia extends JavaPlugin{
     public void onEnable() {
         getLogger().info("SBU trivia plugin enabled!");;
         getServer().getPluginManager().registerEvents(new TriviaListenerButton(),this);
+        getServer().getPluginManager().registerEvents(new TriviaListenerChat(),this);
         this.getCommand("answer").setExecutor(new TriviaAnswer(this));
+        this.getCommand("triviaInitialize").setExecutor(new TriviaInitialize());
+        this.getCommand("triviaEnd").setExecutor(new TriviaEnd());
     }
 
     @Override

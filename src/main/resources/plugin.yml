@@ -9,3 +9,9 @@ commands:
   giveButton:
     description: Give an answer button
     usage: /giveButton
+  triviaInitialize:
+    description: Create the answering team
+    usage: /triviaInitialize
+  triviaEnd:
+    description: Delete the answering team
+    usage: /triviaEnd

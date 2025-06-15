@@ -1,5 +1,6 @@
 package com.sbu;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.block.CommandBlock;
@@ -10,6 +11,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public class TriviaAnswer implements CommandExecutor {
     private long lastUsed = 0L;
@@ -24,7 +27,11 @@ public class TriviaAnswer implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof ConsoleCommandSender) {
-
+            Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+            Team team = scoreboard.getTeam("answering");
+            if(team==null){
+                return true;
+            }
             String playerName = strings[0];
 
             for(Player player : commandSender.getServer().getWorld("world").getPlayers()){
@@ -43,6 +50,9 @@ public class TriviaAnswer implements CommandExecutor {
                 return true;
             }
             lastUsed=now;
+
+            team.addEntry(playerAnswering.getName());
+            playerAnswering.setScoreboard(scoreboard);
             for (int i = 0; i < 10; i++) {
                 final int indicator = i;
                 new BukkitRunnable(){
@@ -51,6 +61,10 @@ public class TriviaAnswer implements CommandExecutor {
                         long secondsLeft = ((answerTime/1000) - (indicator));
                         for(Player player : commandSender.getServer().getWorld("world").getPlayers()){
                             player.sendTitle(ChatColor.DARK_AQUA+"Answering: "+ ChatColor.AQUA+playerAnswering.getDisplayName(),"Time left: "+secondsLeft,5, 20, 5);
+                        }
+                        if(indicator==9){
+                            team.removeEntry(playerAnswering.getName());
+                            playerAnswering.setScoreboard(scoreboard);
                         }
                     }
                 }.runTaskLater(plugin,20*indicator);
