@@ -59,7 +59,7 @@ public class TriviaAnswer implements CommandExecutor {
                     @Override
                     public void run(){
                         long secondsLeft = ((answerTime/1000) - (indicator));
-                        for(Player player : commandSender.getServer().getWorld("world").getPlayers()){
+                        for(Player player : playerAnswering.getWorld().getPlayers()){
                             player.sendTitle(ChatColor.DARK_AQUA+"Answering: "+ ChatColor.AQUA+playerAnswering.getDisplayName(),"Time left: "+secondsLeft,5, 20, 5);
                         }
                         if(indicator==9){
