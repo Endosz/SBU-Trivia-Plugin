@@ -10,6 +10,8 @@ public class SBUTrivia extends JavaPlugin{
         this.getCommand("answer").setExecutor(new TriviaAnswer(this));
         this.getCommand("triviaInitialize").setExecutor(new TriviaInitialize());
         this.getCommand("triviaEnd").setExecutor(new TriviaEnd());
+        this.getCommand("triviaAddLife").setExecutor(new TriviaAddLife());
+        this.getCommand("triviaRemoveLife").setExecutor(new TriviaRemoveLife());
     }
 
     @Override

@@ -3,15 +3,18 @@ version: 1.0
 main: com.sbu.SBUTrivia
 api-version: 1.21
 commands:
-  answer:
-    description: Answer a question
-    usage: /answer
-  giveButton:
-    description: Give an answer button
-    usage: /giveButton
   triviaInitialize:
     description: Create the answering team
     usage: /triviaInitialize
   triviaEnd:
     description: Delete the answering team
     usage: /triviaEnd
+  triviaAddLife:
+    description: Increment a player's score
+    usage: /triviaAddLife <player>
+  triviaRemoveLife:
+    description: Decrement a player's score
+    usage: /triviaRemoveLife <player>
+  answer:
+    description: Answer a question
+    usage: /answer <player>
