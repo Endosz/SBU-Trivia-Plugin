@@ -34,7 +34,13 @@ public class TriviaAnswer implements CommandExecutor {
             }
             String playerName = strings[0];
 
-            for(Player player : commandSender.getServer().getWorld("world").getPlayers()){
+            long now = System.currentTimeMillis();
+            if (now - lastUsed < answerTime) {
+                long secondsLeft = (answerTime - (now - lastUsed)) / 1000;
+                Bukkit.getPlayer(playerName).sendMessage("§cThis command is on cooldown for " + secondsLeft + " more seconds.");
+                return true;
+            }
+            for(Player player : Bukkit.getPlayer(playerName).getWorld().getPlayers()){
                 if(player.getDisplayName().equals(playerName)){
                     playerAnswering=player;
                     break;
@@ -42,12 +48,6 @@ public class TriviaAnswer implements CommandExecutor {
             }
             if(playerAnswering==null){
                 return false;
-            }
-            long now = System.currentTimeMillis();
-            if (now - lastUsed < answerTime) {
-                long secondsLeft = (answerTime - (now - lastUsed)) / 1000;
-                playerAnswering.sendMessage("§cThis command is on cooldown for " + secondsLeft + " more seconds.");
-                return true;
             }
             lastUsed=now;
 
