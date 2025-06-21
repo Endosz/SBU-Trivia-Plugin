@@ -1,7 +1,6 @@
-package com.sbu;
+package com.sbu.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +14,9 @@ public class TriviaEnd implements CommandExecutor {
         if(commandSender.isOp()){
             Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
             Team team = scoreboard.getTeam("answering");
-            team.unregister();
+            if(team!=null){
+                team.unregister();
+            }
             Objective lives = scoreboard.getObjective("Lives");
             if(lives!=null) lives.unregister();
             commandSender.sendMessage("Trivia terminated!");

@@ -18,3 +18,6 @@ commands:
   answer:
     description: Answer a question
     usage: /answer <player>
+  triviaSetAnswerTime:
+    description: Set the answer time per trivia question
+    usage: /triviaSetAnswerTime <number>

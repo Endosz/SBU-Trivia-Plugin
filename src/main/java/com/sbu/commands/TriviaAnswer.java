@@ -1,17 +1,13 @@
-package com.sbu;
+package com.sbu.commands;
 
+import com.sbu.SBUTrivia;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.block.CommandBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
@@ -19,7 +15,6 @@ import org.bukkit.scoreboard.Team;
 
 public class TriviaAnswer implements CommandExecutor {
     private long lastUsed = 0L;
-    private long answerTime = 10*1000;
     private Player playerAnswering = null;
     private Plugin plugin;
 
@@ -30,6 +25,7 @@ public class TriviaAnswer implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof ConsoleCommandSender) {
+            long answerTime= ((SBUTrivia) plugin).getQuestionAnswerTime()*1000;
             Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
             Team team = scoreboard.getTeam("answering");
             if(team==null){
@@ -56,7 +52,7 @@ public class TriviaAnswer implements CommandExecutor {
 
             team.addEntry(playerAnswering.getName());
             playerAnswering.setScoreboard(scoreboard);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < ((SBUTrivia) plugin).getQuestionAnswerTime(); i++) {
                 final int indicator = i;
                 new BukkitRunnable(){
                     @Override
@@ -65,7 +61,7 @@ public class TriviaAnswer implements CommandExecutor {
                         for(Player player : playerAnswering.getWorld().getPlayers()){
                             player.sendTitle(ChatColor.DARK_AQUA+"Answering: "+ ChatColor.AQUA+playerAnswering.getDisplayName(),"Time left: "+secondsLeft,5, 20, 5);
                         }
-                        if(indicator==9){
+                        if(indicator==((SBUTrivia) plugin).getQuestionAnswerTime()-1){
                             team.removeEntry(playerAnswering.getName());
                             playerAnswering.setScoreboard(scoreboard);
                         }

@@ -1,4 +1,4 @@
-package com.sbu;
+package com.sbu.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
